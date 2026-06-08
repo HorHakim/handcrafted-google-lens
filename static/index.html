@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0f0f">
+  <title>Handcrafted Google Lens</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous" defer></script>
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="app-header" role="banner">
+    <div class="header-inner">
+      <span class="logo-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="11" cy="11" r="7" stroke="#cba6f7" stroke-width="2"/>
+          <line x1="16.5" y1="16.5" x2="22" y2="22" stroke="#cba6f7" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="11" cy="11" r="3" fill="#cba6f7" opacity="0.3"/>
+        </svg>
+      </span>
+      <h1 class="app-title">Handcrafted Google Lens</h1>
+    </div>
+  </header>
+
+  <main class="app-main" role="main">
+    <section class="upload-card">
+      <form
+        id="upload-form"
+        hx-post="/api/analyze"
+        hx-target="#result-container"
+        hx-swap="innerHTML"
+        hx-encoding="multipart/form-data"
+        hx-indicator="#spinner"
+      >
+        <label for="image-input" class="upload-zone" id="upload-label" tabindex="0" role="button"
+               aria-label="Prendre une photo ou choisir une image">
+          <span class="upload-icon" aria-hidden="true">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+          </span>
+          <span class="upload-text">Prendre une photo ou choisir une image</span>
+          <span class="upload-hint">JPG, PNG, WEBP, GIF — max 10 Mo</span>
+        </label>
+
+        <input
+          type="file"
+          id="image-input"
+          name="file"
+          accept="image/*"
+          capture="environment"
+          class="sr-only"
+          aria-label="Choisir une image à analyser"
+        >
+
+        <div class="preview-container" id="preview-container" hidden>
+          <img id="preview-image" class="preview-image" alt="Aperçu de l'image sélectionnée">
+          <button type="button" id="clear-btn" class="btn-clear" aria-label="Supprimer l'image">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <button type="submit" class="btn-analyze" id="analyze-btn" disabled aria-label="Analyser l'image">
+          <span id="spinner" class="spinner htmx-indicator" aria-hidden="true"></span>
+          <span class="btn-text">Analyser</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="result-card" id="result-container" aria-live="polite" aria-atomic="true" hidden>
+    </section>
+  </main>
+</body>
+</html>

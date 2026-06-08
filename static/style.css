@@ -1,0 +1,320 @@
+/* Catppuccin Mocha */
+:root {
+  --crust:    #11111b;
+  --mantle:   #181825;
+  --base:     #1e1e2e;
+  --surface0: #313244;
+  --surface1: #45475a;
+  --surface2: #585b70;
+  --overlay0: #6c7086;
+  --overlay1: #7f849c;
+  --overlay2: #9399b2;
+  --subtext0: #a6adc8;
+  --subtext1: #bac2de;
+  --text:     #cdd6f4;
+  --lavender: #b4befe;
+  --blue:     #89b4fa;
+  --sapphire: #74c7ec;
+  --sky:      #89dceb;
+  --teal:     #94e2d5;
+  --green:    #a6e3a1;
+  --yellow:   #f9e2af;
+  --peach:    #fab387;
+  --maroon:   #eba0ac;
+  --red:      #f38ba8;
+  --mauve:    #cba6f7;
+  --pink:     #f5c2e7;
+  --flamingo: #f2cdcd;
+  --rosewater:#f5e0dc;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--base);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- Header ---- */
+.app-header {
+  padding: 16px 20px;
+  background-color: var(--mantle);
+  border-bottom: 1px solid var(--surface0);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.logo-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.app-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--lavender);
+  letter-spacing: -0.01em;
+}
+
+/* ---- Main layout ---- */
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 16px;
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ---- Upload card ---- */
+.upload-card {
+  background: var(--mantle);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--surface0);
+}
+
+/* ---- Upload zone ---- */
+.upload-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border: 2px dashed var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 36px 20px;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+  color: var(--subtext0);
+}
+
+.upload-zone:hover,
+.upload-zone:focus-visible {
+  border-color: var(--mauve);
+  border-style: solid;
+  background-color: rgba(203, 166, 247, 0.06);
+  color: var(--text);
+  outline: none;
+}
+
+.upload-zone.has-image {
+  padding: 12px 20px;
+  flex-direction: row;
+  justify-content: center;
+  border-style: solid;
+  border-color: var(--mauve);
+}
+
+.upload-zone.has-image .upload-icon,
+.upload-zone.has-image .upload-hint {
+  display: none;
+}
+
+.upload-icon {
+  color: var(--mauve);
+}
+
+.upload-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: inherit;
+}
+
+.upload-hint {
+  font-size: 0.8rem;
+  color: var(--overlay1);
+}
+
+/* ---- Preview ---- */
+.preview-container {
+  position: relative;
+  margin-top: 16px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--crust);
+  border: 1px solid var(--surface1);
+}
+
+.preview-image {
+  display: block;
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+}
+
+.btn-clear {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(17, 17, 27, 0.75);
+  border: 1px solid var(--surface1);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--subtext1);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-clear:hover {
+  background: var(--surface0);
+  color: var(--red);
+}
+
+/* ---- Analyze button ---- */
+.btn-analyze {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 14px 24px;
+  background: var(--mauve);
+  color: var(--crust);
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s, opacity 0.2s, transform 0.1s;
+}
+
+.btn-analyze:hover:not(:disabled) {
+  background: var(--lavender);
+  transform: translateY(-1px);
+}
+
+.btn-analyze:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-analyze:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ---- Spinner (HTMX indicator) ---- */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(30, 30, 46, 0.4);
+  border-top-color: var(--crust);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* HTMX indicator visibility */
+.htmx-indicator {
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.htmx-request .htmx-indicator {
+  opacity: 1;
+}
+
+.htmx-request .btn-text {
+  opacity: 0.6;
+}
+
+/* ---- Result card ---- */
+.result-card {
+  background: var(--mantle);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--surface0);
+  border-left: 3px solid var(--mauve);
+}
+
+.result-card:empty {
+  display: none;
+}
+
+.result-text {
+  white-space: pre-wrap;
+  line-height: 1.8;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.result-error {
+  color: var(--red);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  border-left: 3px solid var(--red);
+  padding-left: 12px;
+}
+
+/* ---- Accessibility ---- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Desktop breakpoint ---- */
+@media (min-width: 600px) {
+  .app-main {
+    padding: 40px 24px;
+  }
+
+  .upload-card,
+  .result-card {
+    padding: 28px;
+  }
+
+  .upload-zone {
+    padding: 48px 32px;
+  }
+
+  .preview-image {
+    max-height: 400px;
+  }
+}

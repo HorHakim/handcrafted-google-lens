@@ -42,7 +42,37 @@ class ImageAgent:
 								"url": f"data:image/jpeg;base64,{base64_image}",
 							},
 						},
-					], 
+					],
+				}
+			],
+
+			model="meta-llama/llama-4-scout-17b-16e-instruct"
+		)
+
+		return chat_completion.choices[0].message.content
+
+
+	def ask_vision_model_bytes(self, image_bytes: bytes, media_type: str = "image/jpeg") -> str:
+		base64_image = base64.b64encode(image_bytes).decode("utf-8")
+		base_dir = os.path.dirname(os.path.abspath(__file__))
+
+		chat_completion = self.client.chat.completions.create(
+			messages=[
+				{
+					"role": "system",
+					"content": ImageAgent.read_file(os.path.join(base_dir, "context.txt"))
+				},
+				{
+					"role": "user",
+					"content": [
+						{"type": "text", "text": ImageAgent.read_file(os.path.join(base_dir, "prompt.txt"))},
+						{
+							"type": "image_url",
+							"image_url": {
+								"url": f"data:{media_type};base64,{base64_image}",
+							},
+						},
+					],
 				}
 			],
 
