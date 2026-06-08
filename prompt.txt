@@ -3,6 +3,7 @@ Retourne UNIQUEMENT un JSON valide, sans texte supplémentaire.
 Analyse l'image et retourne:
 {
   "object": "Objet principal",
-  "description": "Description ou text extrait (si présent)",
+  "description": "Description ou text extrait (rajouter transcription si il y a du text dans l'image et qu'il s'agit de l'information principale présente.)",
+  "search_query": Indique ce que l'on devrait mettre dans une recherche sur un moteur de recherche afin de retrouver l'élément présent dans l'image.
   "confidence": "haute/moyen/basse",
 }

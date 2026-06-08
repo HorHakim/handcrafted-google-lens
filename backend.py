@@ -49,7 +49,13 @@ class ImageAgent:
 			model="meta-llama/llama-4-scout-17b-16e-instruct"
 		)
 
-		return json.loads(chat_completion.choices[0].message.content)
+		image_description = json.loads(chat_completion.choices[0].message.content)
+
+		url_search_query = f"https://www.google.com/search?q={image_description["search_query"]}"
+
+		del image_description["search_query"]
+		
+		return image_description, url_search_query
 
 
 	def ask_vision_model_bytes(self, image_bytes: bytes, media_type: str = "image/jpeg") -> str:
@@ -79,14 +85,20 @@ class ImageAgent:
 			model="meta-llama/llama-4-scout-17b-16e-instruct"
 		)
 
-		return json.loads(chat_completion.choices[0].message.content)
+		image_description = json.loads(chat_completion.choices[0].message.content)
 
+		url_search_query = f"https://www.google.com/search?q={image_description["search_query"]}"
+
+		del image_description["search_query"]
+		
+		return image_description, url_search_query
 
 
 if __name__ == "__main__":
 	image_agent_object = ImageAgent()
 
 	image_path = "image.jpg"
-	image_description = image_agent_object.ask_vision_model(image_path=image_path)
+	image_description, url_search_query = image_agent_object.ask_vision_model(image_path=image_path)
 	
-	print(image_description["object"])
+	print(image_description)
+	print(url_search_query)
