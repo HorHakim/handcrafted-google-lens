@@ -2,7 +2,7 @@ from groq import Groq
 import base64
 from dotenv import load_dotenv
 import os 
-
+import json
 
 class ImageAgent:
 	def __init__(self):
@@ -45,11 +45,11 @@ class ImageAgent:
 					],
 				}
 			],
-
+			response_format={"type": "json_object"},
 			model="meta-llama/llama-4-scout-17b-16e-instruct"
 		)
 
-		return chat_completion.choices[0].message.content
+		return json.loads(chat_completion.choices[0].message.content)
 
 
 	def ask_vision_model_bytes(self, image_bytes: bytes, media_type: str = "image/jpeg") -> str:
@@ -75,11 +75,11 @@ class ImageAgent:
 					],
 				}
 			],
-
+			response_format={"type": "json_object"},
 			model="meta-llama/llama-4-scout-17b-16e-instruct"
 		)
 
-		return chat_completion.choices[0].message.content
+		return json.loads(chat_completion.choices[0].message.content)
 
 
 
@@ -89,4 +89,4 @@ if __name__ == "__main__":
 	image_path = "image.jpg"
 	image_description = image_agent_object.ask_vision_model(image_path=image_path)
 	
-	print(image_description)
+	print(image_description["object"])

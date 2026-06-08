@@ -65,9 +65,25 @@ L'interface web est accessible sur `http://localhost:8000`.
 
 ---
 
+## Sortie du modèle — format JSON
+
+Le modèle retourne un objet JSON structuré (imposé via `response_format={"type": "json_object"}` dans l'appel Groq) :
+
+```json
+{
+  "object": "Objet principal identifié",
+  "description": "Description détaillée ou texte extrait (OCR)",
+  "confidence": "haute | moyen | basse"
+}
+```
+
+`ask_vision_model()` et `ask_vision_model_bytes()` retournent tous les deux un `dict` Python (résultat de `json.loads()`).
+
 ## Pattern HTMX — fragments HTML
 
-L'API `/api/analyze` retourne un **fragment HTML** (`HTMLResponse`), pas du JSON. C'est intentionnel : HTMX swap directement le fragment dans `#result-container` sans JS supplémentaire.
+L'API `/api/analyze` reçoit le `dict` JSON du modèle et le convertit en **fragment HTML** via `build_result_fragment()` dans `app.py`. HTMX swap directement ce fragment dans `#result-container`.
+
+Le fragment est une grille `.result-grid` avec trois lignes (objet, description, confiance). La confiance est rendue comme un badge coloré (`.confidence-high` → vert, `.confidence-medium` → jaune, `.confidence-low` → rouge) en palette Catppuccin Mocha.
 
 Les erreurs (4xx/5xx) retournent aussi un fragment HTML grâce au gestionnaire d'exceptions global dans `app.py`. Le JS dans `app.js` écoute `htmx:responseError` pour injecter manuellement ces fragments (HTMX ne swap pas sur les codes d'erreur par défaut).
 
