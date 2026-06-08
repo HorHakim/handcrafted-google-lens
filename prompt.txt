@@ -1,1 +1,8 @@
 Analyse cette image et dis-moi ce que tu vois.
+Retourne UNIQUEMENT un JSON valide, sans texte supplémentaire.
+Analyse l'image et retourne:
+{
+  "object": "Objet principal",
+  "description": "Description ou text extrait (si présent)",
+  "confidence": "haute/moyen/basse",
+}
