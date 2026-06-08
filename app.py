@@ -17,12 +17,13 @@ agent = ImageAgent()
 CONFIDENCE_CLASS = {"haute": "confidence-high", "moyen": "confidence-medium", "basse": "confidence-low"}
 
 
-def build_result_fragment(data: dict) -> str:
+def build_result_fragment(data: dict, url: str) -> str:
     obj = escape(str(data.get("object", "—")))
     description = escape(str(data.get("description", "—")))
     confidence_raw = str(data.get("confidence", "")).lower()
     confidence_label = escape(str(data.get("confidence", "—")))
     confidence_class = CONFIDENCE_CLASS.get(confidence_raw, "confidence-medium")
+    safe_url = escape(url)
 
     return f"""
 <div class="result-grid">
@@ -39,6 +40,9 @@ def build_result_fragment(data: dict) -> str:
     <span class="confidence-badge {confidence_class}">{confidence_label}</span>
   </div>
 </div>
+<a href="{safe_url}" target="_blank" rel="noopener noreferrer" class="btn-google-search">
+  Rechercher sur Google
+</a>
 """
 
 
@@ -68,8 +72,8 @@ async def analyze_image(file: UploadFile = File(...)):
         raise HTTPException(413, detail="Image trop volumineuse (maximum 10 Mo).")
 
     try:
-        result = agent.ask_vision_model_bytes(image_bytes, media_type=file.content_type)
+        result, url_search_query = agent.ask_vision_model_bytes(image_bytes, media_type=file.content_type)
     except Exception as e:
         raise HTTPException(500, detail=f"Erreur du modèle : {str(e)}")
 
-    return HTMLResponse(content=build_result_fragment(result))
+    return HTMLResponse(content=build_result_fragment(result, url_search_query))

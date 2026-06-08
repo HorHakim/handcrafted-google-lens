@@ -1,7 +1,8 @@
 from groq import Groq
 import base64
 from dotenv import load_dotenv
-import os 
+from urllib.parse import quote_plus
+import os
 import json
 
 class ImageAgent:
@@ -51,10 +52,10 @@ class ImageAgent:
 
 		image_description = json.loads(chat_completion.choices[0].message.content)
 
-		url_search_query = f"https://www.google.com/search?q={image_description["search_query"]}"
+		url_search_query = f"https://www.google.com/search?q={quote_plus(image_description['search_query'])}"
 
 		del image_description["search_query"]
-		
+
 		return image_description, url_search_query
 
 
@@ -87,10 +88,10 @@ class ImageAgent:
 
 		image_description = json.loads(chat_completion.choices[0].message.content)
 
-		url_search_query = f"https://www.google.com/search?q={image_description["search_query"]}"
+		url_search_query = f"https://www.google.com/search?q={quote_plus(image_description['search_query'])}"
 
 		del image_description["search_query"]
-		
+
 		return image_description, url_search_query
 
 
