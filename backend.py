@@ -83,7 +83,7 @@ class ImageAgent:
 				}
 			],
 			response_format={"type": "json_object"},
-			model="meta-llama/llama-4-scout-17b-16e-instruct"
+			model="qwen/qwen3.6-27b"
 		)
 
 		image_description = json.loads(chat_completion.choices[0].message.content)
